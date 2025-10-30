@@ -1,0 +1,21 @@
+/* App styles (Tailwind entrypoint) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* кастомные стили при необходимости ниже */
+/*
+.example {
+  @apply text-sm text-gray-600;
+}
+*/
+
+/* Custom utilities for line-clamp - needed for mobile menu descriptions */
+@layer utilities {
+    .line-clamp-2 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+}
