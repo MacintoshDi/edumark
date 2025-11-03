@@ -193,37 +193,34 @@ class MenuResource extends Resource
 
     /**
      * Проверка доступа к ресурсу
-     * Доступ только для ролей admin и editor
      */
     public static function canViewAny(): bool
     {
-        $user = auth()->user();
-        
-        if (!$user) {
-            return false;
-        }
-
-        // Проверяем роли через spatie/permission
-        return $user->hasAnyRole(['admin', 'editor']);
+        return true;
     }
 
     public static function canCreate(): bool
     {
-        return static::canViewAny();
+        return true;
     }
 
     public static function canEdit($record): bool
     {
-        return static::canViewAny();
+        return true;
     }
 
     public static function canDelete($record): bool
     {
-        return static::canViewAny();
+        return true;
     }
 
     public static function canDeleteAny(): bool
     {
-        return static::canViewAny();
+        return true;
+    }
+    
+    public static function canRestore($record): bool
+    {
+        return false;
     }
 }

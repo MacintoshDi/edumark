@@ -25,7 +25,6 @@ class Cohort extends Model
         'price',
         'status',
         'features',
-        // Новые поля для динамического меню
         'badge',
         'icon',
         'published',
@@ -43,10 +42,6 @@ class Cohort extends Model
         'published' => 'boolean',
         'order' => 'integer',
     ];
-
-    // ==========================================
-    // RELATIONSHIPS
-    // ==========================================
 
     public function category(): BelongsTo
     {
@@ -90,29 +85,16 @@ class Cohort extends Model
         return $this->hasMany(Event::class);
     }
 
-    // ==========================================
-    // QUERY SCOPES (для динамического меню)
-    // ==========================================
-
-    /**
-     * Scope: только опубликованные cohorts для меню
-     */
     public function scopePublished(Builder $query): void
     {
         $query->where('published', true);
     }
 
-    /**
-     * Scope: только активные cohorts (по status)
-     */
     public function scopeActive(Builder $query): void
     {
         $query->where('status', 'active');
     }
 
-    /**
-     * Scope: сортировка по order, затем starts_at
-     */
     public function scopeOrdered(Builder $query): void
     {
         $query->orderBy('order', 'asc')
@@ -120,9 +102,6 @@ class Cohort extends Model
               ->orderBy('name', 'asc');
     }
 
-    /**
-     * Scope: featured cohorts (с badge или icon)
-     */
     public function scopeFeatured(Builder $query): void
     {
         $query->where(function ($q) {
@@ -130,10 +109,6 @@ class Cohort extends Model
               ->orWhereNotNull('icon');
         });
     }
-
-    // ==========================================
-    // HELPER METHODS
-    // ==========================================
 
     public function isActive(): bool
     {
@@ -166,17 +141,11 @@ class Cohort extends Model
         return max(0, $this->max_students - $this->enrolledCount());
     }
 
-    /**
-     * Получить title (alias для name)
-     */
     public function getTitleAttribute(): string
     {
         return $this->name;
     }
 
-    /**
-     * Получить короткое описание (для меню)
-     */
     public function getShortDescriptionAttribute(): ?string
     {
         if (!$this->description) {

@@ -2,193 +2,145 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cohort;
+use App\Models\User;
+use App\Models\Discussion;
+use App\Models\Event;
+use App\Repositories\MenuRepository;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Example HomeController для демонстрации работы мобильной навигации
+ * HomeController - главная страница и публичные views
  * 
- * ВАЖНО: Это упрощенный пример с моковыми данными!
- * В полной версии (после Шага 1.2) данные будут браться из MenuRepository
+ * Использует MenuRepository для загрузки меню
+ * Загружает featured cohorts для главной страницы
  */
 class HomeController extends Controller
 {
+    protected MenuRepository $menuRepository;
+
+    public function __construct(MenuRepository $menuRepository)
+    {
+        $this->menuRepository = $menuRepository;
+    }
+
+    /**
+     * Главная страница (для гостей и авторизованных пользователей)
+     * 
+     * @return View
+     */
     public function index(): View
     {
-        // Моковые данные меню для примера (структура как из API)
-        // В реальности это придет из MenuRepository->getTree('main', 'header', 'desktop')
-        $menuItems = $this->getMockMenuData();
+        // Получаем меню из репозитория
+        $menuData = $this->menuRepository->getTree(
+    slug: 'main',
+    location: 'header',
+    device: $this->detectDevice()
+);
+
+// Извлекаем только массив items
+$menuItems = $menuData['items'] ?? [];
+
+        // Загружаем featured cohorts (первые 4 опубликованных с badge)
+        $featuredCohorts = Cohort::published()
+            ->featured()
+            ->ordered()
+            ->limit(4)
+            ->withCount('students')
+            ->get();
+
+        // Статистика для страницы
+        $stats = [
+            'users' => User::where('is_active', true)->count(),
+            'cohorts' => Cohort::published()->count(),
+            'discussions' => Discussion::count(),
+            'events' => Event::where('start_time', '>=', now())->count(),
+        ];
 
         return view('welcome', [
-            'menuItems' => $menuItems
+            'menuItems' => $menuItems,
+            'featuredCohorts' => $featuredCohorts,
+            'stats' => $stats,
         ]);
     }
 
     /**
-     * Временные моковые данные меню
-     * Удалить после реализации MenuRepository (Шаг 1.2)
+     * Персональный дашборд для авторизованных пользователей
+     * 
+     * @return View
      */
-    private function getMockMenuData(): array
+    public function dashboard(): View
     {
-        return [
-            // 1. Cohorts (mega menu)
-            [
-                'id' => 1,
-                'title' => 'Cohorts',
-                'type' => 'mega',
-                'url' => null,
-                'target' => '_self',
-                'order' => 1,
-                'icon' => null,
-                'children' => [
-                    [
-                        'id' => 7,
-                        'title' => 'Marketing Fundamentals',
-                        'type' => 'feature-tile',
-                        'url' => '/cohorts/marketing-fundamentals',
-                        'target' => '_self',
-                        'order' => 1,
-                        'icon' => null,
-                        'badge' => '1',
-                        'description' => 'Learn the basics of digital marketing and grow your business.',
-                        'cta_text' => 'Join',
-                    ],
-                    [
-                        'id' => 8,
-                        'title' => 'Advanced SEO',
-                        'type' => 'feature-tile',
-                        'url' => '/cohorts/advanced-seo',
-                        'target' => '_self',
-                        'order' => 2,
-                        'icon' => null,
-                        'badge' => '2',
-                        'description' => 'Master search engine optimization techniques.',
-                        'cta_text' => 'Join',
-                    ],
-                    [
-                        'id' => 9,
-                        'title' => 'Content Strategy',
-                        'type' => 'feature-tile',
-                        'url' => '/cohorts/content-strategy',
-                        'target' => '_self',
-                        'order' => 3,
-                        'icon' => null,
-                        'badge' => '3',
-                        'description' => 'Create engaging content that converts.',
-                        'cta_text' => 'Join',
-                    ],
-                    [
-                        'id' => 10,
-                        'title' => 'Social Media Marketing',
-                        'type' => 'feature-tile',
-                        'url' => '/cohorts/social-media-marketing',
-                        'target' => '_self',
-                        'order' => 4,
-                        'icon' => null,
-                        'badge' => '4',
-                        'description' => 'Build your brand on social platforms.',
-                        'cta_text' => 'Join',
-                    ],
-                    [
-                        'id' => 11,
-                        'title' => 'Browse all cohorts',
-                        'type' => 'link',
-                        'url' => '/cohorts',
-                        'target' => '_self',
-                        'order' => 5,
-                        'icon' => 'heroicon-o-list-bullet',
-                    ],
-                ],
-            ],
-            // 2. Community (mega menu)
-            [
-                'id' => 2,
-                'title' => 'Community',
-                'type' => 'mega',
-                'url' => null,
-                'target' => '_self',
-                'order' => 2,
-                'icon' => null,
-                'children' => [
-                    [
-                        'id' => 12,
-                        'title' => 'Discussions',
-                        'type' => 'feature-tile',
-                        'url' => '/community/discussions',
-                        'target' => '_self',
-                        'order' => 1,
-                        'icon' => 'heroicon-o-chat-bubble-left-right',
-                        'description' => 'Join conversations with fellow learners.',
-                        'cta_text' => 'Join',
-                    ],
-                    [
-                        'id' => 13,
-                        'title' => 'Events',
-                        'type' => 'feature-tile',
-                        'url' => '/community/events',
-                        'target' => '_self',
-                        'order' => 2,
-                        'icon' => 'heroicon-o-calendar',
-                        'description' => 'Attend workshops, webinars, and meetups.',
-                        'cta_text' => 'Join',
-                    ],
-                    [
-                        'id' => 14,
-                        'title' => 'Spotlight',
-                        'type' => 'feature-tile',
-                        'url' => '/community/spotlight',
-                        'target' => '_self',
-                        'order' => 3,
-                        'icon' => 'heroicon-o-star',
-                        'description' => 'Celebrate success stories from our community.',
-                        'cta_text' => 'Join',
-                    ],
-                ],
-            ],
-            // 3. Connect (link)
-            [
-                'id' => 3,
-                'title' => 'Connect',
-                'type' => 'link',
-                'url' => '/connect',
-                'target' => '_self',
-                'order' => 3,
-                'icon' => null,
-            ],
-            // 4. Ask Your Teacher (link)
-            [
-                'id' => 4,
-                'title' => 'Ask Your Teacher',
-                'type' => 'link',
-                'url' => '/ask-your-teacher',
-                'target' => '_self',
-                'order' => 4,
-                'icon' => null,
-            ],
-            // 5. Search (button)
-            [
-                'id' => 5,
-                'title' => 'Search',
-                'type' => 'button',
-                'url' => null,
-                'target' => '_self',
-                'order' => 5,
-                'icon' => 'heroicon-o-magnifying-glass',
-                'meta' => [
-                    'action' => 'open-search',
-                    'icon' => 'heroicon-o-magnifying-glass',
-                ],
-            ],
-            // 6. Log in (link)
-            [
-                'id' => 6,
-                'title' => 'Log in',
-                'type' => 'link',
-                'url' => '/login',
-                'target' => '_self',
-                'order' => 6,
-                'icon' => null,
-            ],
-        ];
+        $user = auth()->user();
+
+        // Получаем меню
+        $menuItems = $this->menuRepository->getTree('main', 'header', $this->detectDevice());
+
+        // Курсы пользователя
+        $myCohorts = $user->cohorts()
+            ->wherePivot('status', 'active')
+            ->withCount('students', 'discussions')
+            ->limit(6)
+            ->get();
+
+        // Предстоящие события
+        $upcomingEvents = Event::whereHas('attendees', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })
+            ->where('start_date', '>=', now())
+            ->orderBy('start_date')
+            ->limit(5)
+            ->get();
+
+        // Недавние обсуждения из курсов пользователя
+        $recentDiscussions = Discussion::whereIn('cohort_id', $myCohorts->pluck('id'))
+            ->with(['user', 'cohort'])
+            ->latest()
+            ->limit(5)
+            ->get();
+
+        return view('dashboard', compact(
+            'menuItems',
+            'myCohorts',
+            'upcomingEvents',
+            'recentDiscussions'
+        ));
+    }
+
+    /**
+     * Определить тип устройства на основе User-Agent
+     * 
+     * @return string desktop|tablet|mobile
+     */
+    protected function detectDevice(): string
+    {
+        $userAgent = request()->header('User-Agent', '');
+
+        // Простая проверка (можно улучшить через библиотеку jenssegers/agent)
+        if (preg_match('/mobile|android|iphone/i', $userAgent)) {
+            return 'mobile';
+        }
+
+        if (preg_match('/tablet|ipad/i', $userAgent)) {
+            return 'tablet';
+        }
+
+        return 'desktop';
+    }
+
+    /**
+     * Очистить кэш меню (для админов)
+     * 
+     * @param string $slug
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function clearMenuCache(string $slug = 'main')
+    {
+        $this->authorize('viewAny', \App\Models\Menu::class);
+        
+        $this->menuRepository->clearCache($slug);
+
+        return back()->with('success', 'Menu cache cleared successfully!');
     }
 }
