@@ -1,0 +1,21 @@
+<?php
+use App\Http\Controllers\MenuController;
+use App\Models\Cohort;
+use App\Repositories\MenuRepository;
+use Illuminate\Support\Facades\Route;
+Route::get('/', function (MenuRepository $menus) {
+    $device = request()->header('X-Device', 'desktop');
+    return view('welcome', [
+        'mainMenu' => $menus->getTree('main', 'header', $device),
+        'device' => $device,
+    ]);
+});
+Route::get('/menus/{slug}/{location}', [MenuController::class, 'show']);
+Route::get('/cohorts/{cohort:slug}', function (Cohort $cohort, MenuRepository $menus) {
+    $device = request()->header('X-Device', 'desktop');
+    return view('cohorts.show', [
+        'cohort' => $cohort->load(['students', 'teachers', 'resources', 'assignments', 'discussions.replies', 'events']),
+        'mainMenu' => $menus->getTree('main', 'header', $device),
+        'device' => $device,
+    ]);
+});

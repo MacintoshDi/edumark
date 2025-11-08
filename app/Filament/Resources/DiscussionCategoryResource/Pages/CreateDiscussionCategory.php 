@@ -1,0 +1,8 @@
+<?php
+namespace App\Filament\Resources\DiscussionCategoryResource\Pages;
+use App\Filament\Resources\DiscussionCategoryResource;
+use Filament\Resources\Pages\CreateRecord;
+class CreateDiscussionCategory extends CreateRecord
+{
+    protected static string $resource = DiscussionCategoryResource::class;
+}

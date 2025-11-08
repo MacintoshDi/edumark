@@ -1,0 +1,15 @@
+<?php
+namespace App\Filament\Resources\DiscussionCategoryResource\Pages;
+use App\Filament\Resources\DiscussionCategoryResource;
+use Filament\Actions;
+use Filament\Resources\Pages\EditRecord;
+class EditDiscussionCategory extends EditRecord
+{
+    protected static string $resource = DiscussionCategoryResource::class;
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\DeleteAction::make(),
+        ];
+    }
+}
