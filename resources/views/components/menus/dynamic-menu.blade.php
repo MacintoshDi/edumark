@@ -1,14 +1,34 @@
-<ul {{ $attributes->class(['menu', 'menu--' . $device]) }}>
+{{-- resources/views/components/menus/dynamic-menu.blade.php --}}
+@props([
+    'items' => [],
+    'device' => 'desktop',
+])
+
+@php
+    $device = is_string($device) ? trim($device) : 'desktop';
+    $items = is_array($items) ? $items : [];
+@endphp
+
+<ul {{ $attributes->merge(['class' => 'menu menu--' . $device]) }}>
     @foreach ($items as $item)
-        <li class="menu__item menu__item--{{ $item['type'] }}">
-            <a href="{{ $item['url'] ?? '#' }}" class="menu__link">
-                @if ($item['icon'])
-                    <x-dynamic-component :component="$item['icon']" class="menu__icon" />
+        @php
+            $type = $item['type'] ?? 'link';
+            $url = $item['url'] ?? '#';
+            $title = $item['title'] ?? '';
+            $icon = $item['icon'] ?? null;
+            $children = $item['children'] ?? [];
+        @endphp
+
+        <li class="menu__item menu__item--{{ e($type) }}">
+            <a href="{{ $url }}" class="menu__link">
+                @if (!empty($icon) && is_string($icon))
+                    <x-dynamic-component :component="$icon" class="menu__icon" />
                 @endif
-                <span>{{ $item['title'] }}</span>
+                <span>{{ $title }}</span>
             </a>
-            @if (!empty($item['children']))
-                <x-menus.dynamic-menu :items="$item['children']" :device="$device" class="menu__submenu" />
+
+            @if (!empty($children) && is_array($children))
+                <x-menus.dynamic-menu :items="$children" :device="$device" class="menu__sub" />
             @endif
         </li>
     @endforeach

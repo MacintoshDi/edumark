@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'panels' => [
-    App\Providers\Filament\AdminPanelProvider::class,
+    'panel_providers' => [
+    \App\Providers\Filament\AdminPanelProvider::class,
 ],
 
 ];
