@@ -1,0 +1,26 @@
+{
+    "name": "edumark/platform",
+    "type": "project",
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^10.0",
+        "filament/filament": "^3.3.43"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\\\": "app/",
+            "Database\\\\Factories\\\\": "database/factories/",
+            "Database\\\\Seeders\\\\": "database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php artisan filament:upgrade"
+        ]
+    }
+}

@@ -1,68 +1,45 @@
 <?php
 
-/**
- * CONTROLLERS FOR EDUMARK PLATFORM - PART 3
- * Place in app/Http/Controllers/
- */
-
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
-// 16. ProfileController.php
 class ProfileController extends Controller
 {
-    public function edit(): View
+    /**
+     * Display the user's profile form.
+     */
+    public function edit(Request $request): View
     {
-        return view('profile.edit', ['user' => auth()->user()]);
+        return view('profile.edit', [
+            'user' => $request->user(),
+        ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    /**
+     * Update the user's profile information.
+     */
+    public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $user = auth()->user();
+        $request->user()->fill($request->validated());
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'bio' => 'nullable|string|max:1000',
-            'avatar' => 'nullable|image|max:2048',
-            'interests' => 'nullable|array',
-            'goals' => 'nullable|array',
-            'linkedin' => 'nullable|url',
-            'github' => 'nullable|url',
-            'twitter' => 'nullable|url',
-            'is_mentor' => 'boolean',
-        ]);
-
-        if ($request->hasFile('avatar')) {
-            if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
-            }
-            $validated['avatar'] = $request->file('avatar')->store('avatars', 'public');
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
         }
 
-        $user->update($validated);
+        $request->user()->save();
 
-        return back()->with('success', 'Profile updated successfully!');
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    public function badges(): View
-    {
-        $user = auth()->user();
-        $badges = $user->badges()->withPivot('earned_at')->get();
-
-        return view('profile.badges', compact('user', 'badges'));
-    }
-
-    public function activity(): View
-    {
-        $activities = auth()->user()->activities()
-            ->with('subject')
-            ->latest()
-            ->paginate(20);
-
-        return view('profile.activity', compact('activities'));
-    }
-
+    /**
+     * Delete the user's account.
+     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -71,13 +48,13 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        auth()->logout();
+        Auth::logout();
 
         $user->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return Redirect::to('/');
     }
 }
