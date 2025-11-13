@@ -19,3 +19,33 @@ Route::get('/cohorts/{cohort:slug}', function (Cohort $cohort, MenuRepository $m
         'device' => $device,
     ]);
 });
+
+// OAuth Social Login Routes
+Route::prefix('auth')->group(function () {
+    // Facebook
+    Route::get('facebook', [App\Http\Controllers\Auth\SocialAuthController::class, 'redirectToFacebook'])
+        ->name('auth.facebook');
+    Route::get('facebook/callback', [App\Http\Controllers\Auth\SocialAuthController::class, 'handleFacebookCallback'])
+        ->name('auth.facebook.callback');
+    
+    // Google
+    Route::get('google', [App\Http\Controllers\Auth\SocialAuthController::class, 'redirectToGoogle'])
+        ->name('auth.google');
+    Route::get('google/callback', [App\Http\Controllers\Auth\SocialAuthController::class, 'handleGoogleCallback'])
+        ->name('auth.google.callback');
+});
+
+// OAuth Social Login Routes
+Route::prefix('auth')->group(function () {
+    // Facebook
+    Route::get('facebook', [App\Http\Controllers\Auth\SocialAuthController::class, 'redirectToFacebook'])
+        ->name('auth.facebook');
+    Route::get('facebook/callback', [App\Http\Controllers\Auth\SocialAuthController::class, 'handleFacebookCallback'])
+        ->name('auth.facebook.callback');
+    
+    // Google
+    Route::get('google', [App\Http\Controllers\Auth\SocialAuthController::class, 'redirectToGoogle'])
+        ->name('auth.google');
+    Route::get('google/callback', [App\Http\Controllers\Auth\SocialAuthController::class, 'handleGoogleCallback'])
+        ->name('auth.google.callback');
+});

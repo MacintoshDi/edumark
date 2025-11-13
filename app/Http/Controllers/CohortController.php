@@ -1,119 +1,47 @@
 <?php
 
-/**
- * CONTROLLERS FOR EDUMARK PLATFORM - PART 1
- * Place in app/Http/Controllers/
- */
-
 namespace App\Http\Controllers;
 
-// 2. CohortController.php
-use App\Models\Cohort;
-use App\Models\Assignment;
-use App\Models\Resource;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CohortController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index(): View
     {
-        $cohorts = Cohort::with(['category', 'students'])
-            ->where(function ($query) {
-                $query->where('status', 'published')
-                    ->orWhere('status', 'active');
-            })
-            ->orderBy('start_date', 'desc')
-            ->paginate(12);
+        $cohorts = [
+            ['name' => 'Growth Marketing', 'desc' => 'Learn the fundamentals of growing a business online.', 'members' => 128, 'posts' => 45, 'image' => 'cohort-growth-marketing.png', 'slug' => 'growth-marketing'],
+            ['name' => 'Advanced SEO', 'desc' => 'Master search engine optimization techniques.', 'members' => 92, 'posts' => 31, 'image' => 'cohort-advanced-seo.png', 'slug' => 'advanced-seo'],
+            ['name' => 'Video Marketing', 'desc' => 'Create and distribute compelling video content.', 'members' => 78, 'posts' => 22, 'image' => 'cohort-video-marketing.png', 'slug' => 'video-marketing'],
+            ['name' => 'Content Marketing', 'desc' => 'Develop a content strategy that drives results.', 'members' => 150, 'posts' => 67, 'image' => 'cohort-content-marketing.png', 'slug' => 'content-marketing'],
+        ];
 
-        $categories = \App\Models\Category::whereNull('parent_id')
-            ->with('children')
-            ->get();
-
-        return view('cohorts.index', compact('cohorts', 'categories'));
+        return view('pages.cohorts.index', ['cohorts' => $cohorts]);
     }
 
-    public function show(Cohort $cohort): View
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $slug): View
     {
-        $cohort->load(['category', 'students', 'teachers', 'discussions', 'events']);
-
-        $isEnrolled = auth()->user()->cohorts->contains($cohort->id);
-
-        $resources = $cohort->resources()
-            ->orderBy('order')
-            ->get();
-
-        $assignments = $cohort->assignments()
-            ->orderBy('order')
-            ->get();
-
-        $discussions = $cohort->discussions()
-            ->with(['user', 'replies'])
-            ->latest()
-            ->take(10)
-            ->get();
-
-        $upcomingEvents = $cohort->events()
-            ->where('start_time', '>', now())
-            ->orderBy('start_time')
-            ->get();
-
-        return view('cohorts.show', compact(
-            'cohort',
-            'isEnrolled',
-            'resources',
-            'assignments',
-            'discussions',
-            'upcomingEvents'
-        ));
-    }
-
-    public function enroll(Request $request, Cohort $cohort): RedirectResponse
-    {
-        $user = auth()->user();
-
-        // Check if already enrolled
-        if ($user->cohorts->contains($cohort->id)) {
-            return back()->with('error', 'You are already enrolled in this cohort.');
-        }
-
-        // Check if cohort is full
-        if ($cohort->isFull()) {
-            return back()->with('error', 'This cohort is full.');
-        }
-
-        // Enroll user
-        $user->cohorts()->attach($cohort->id, [
-            'role' => 'student',
-            'enrolled_at' => now(),
-            'status' => 'enrolled',
-            'progress' => 0,
-        ]);
-
-        // Log activity
-        \App\Models\ActivityLog::log(
-            $user,
-            'cohort.enrolled',
-            $cohort,
-            ['cohort_name' => $cohort->name],
-            10
-        );
-
-        return back()->with('success', 'Successfully enrolled in ' . $cohort->name);
-    }
-
-    public function leave(Cohort $cohort): RedirectResponse
-    {
-        $user = auth()->user();
-
-        if (!$user->cohorts->contains($cohort->id)) {
-            return back()->with('error', 'You are not enrolled in this cohort.');
-        }
-
-        $user->cohorts()->updateExistingPivot($cohort->id, [
-            'status' => 'dropped',
-        ]);
-
-        return redirect()->route('cohorts.index')
-            ->with('success', 'You have left ' . $cohort->name);
+        // In a real application, you would find the cohort by its slug.
+        // For this example, we'll just show the static detail page and pass some sample posts.
+        $posts = [
+            [
+                'author' => 'Daniel Wilson', 'avatar' => 'daniel-wilson.jpg', 'time' => '3h ago',
+                'content' => "Just published my first blog post using the SEO techniques we learned in the 'Advanced SEO' cohort! It's about optimizing for local search. Would love to get some feedback from you all. Check it out and let me know what you think!",
+                'likes' => 12, 'comments' => 4,
+            ],
+            [
+                'author' => 'Sarah Miller', 'avatar' => 'sarah-miller.jpg', 'time' => '8h ago',
+                'content' => "I'm looking for a good video editing software for creating short-form content for social media. What are your top recommendations? Preferably something that's user-friendly but has powerful features.",
+                'likes' => 25, 'comments' => 11,
+            ]
+        ];
+        
+        return view('pages.cohorts.show', ['posts' => $posts]);
     }
 }

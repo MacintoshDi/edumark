@@ -24,19 +24,31 @@ class User extends Authenticatable implements FilamentUser
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'avatar',
-        'bio',
-        'location',
-        'role',
-        'cohort_id',
-        'phone',
-        'is_active',
-        'social_links',
-        'last_login_at',
-    ];
+    'name',
+    'first_name',
+    'last_name',
+    'email',
+    'phone',
+    'password',
+    'avatar',
+    'bio',
+    'location',
+    'role',
+    'interests',
+    'goals',
+    'linkedin',
+    'github',
+    'twitter',
+    'locale',
+    'timezone',
+    'facebook_id',
+    'google_id',
+    'provider',
+    'provider_id',
+    'is_active',
+    'is_mentor',
+    'points',
+];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -190,6 +202,17 @@ class User extends Authenticatable implements FilamentUser
     // ==========================================
     // HELPER METHODS
     // ==========================================
+    
+    /**
+ * Get full name
+ */
+public function getFullNameAttribute(): string
+{
+    if ($this->first_name && $this->last_name) {
+        return "{$this->first_name} {$this->last_name}";
+    }
+    return $this->name;
+} 
 
     /**
      * Check if user is admin.

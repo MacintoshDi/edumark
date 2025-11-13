@@ -19,7 +19,7 @@ class MenuResource extends Resource
     
     protected static ?string $navigationLabel = 'Меню';
     
-    protected static ?string $navigationGroup = 'Контент';
+    protected static ?string $navigationGroup = null;
     
     protected static ?int $navigationSort = 1;
 
@@ -52,7 +52,7 @@ class MenuResource extends Resource
                         ->maxLength(255)
                         ->helperText('Например: main, footer-menu')
                         ->rule('alpha_dash')
-                        ->lowercase()
+                        ->formatStateUsing(fn ($state) => strtolower($state))
                         ->columnSpanFull(),
                 ])
                 ->columns(1),
