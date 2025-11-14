@@ -30,15 +30,6 @@ class CareerController extends Controller
     {
         // In a real application, you would find the job by its ID.
         // For this example, we'll just show the static detail page.
-        $job = [
-            'id' => $id, 
-            'title' => 'Product Marketing Manager', 
-            'company' => 'Bettermode', 
-            'location' => 'Remote (US)', 
-            'type' => 'Full-time', 
-            'logo' => 'bettermode-icon.png'
-        ];
-        
-        return view('pages.academy.career-detail', ['job' => $job]);
+        return view('pages.academy.career-detail');
     }
 }

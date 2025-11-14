@@ -65,24 +65,24 @@
         <h2 class="text-xl font-bold text-copy mb-4">Continue Learning</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @php
-            $learning = [
+            $cohorts = [
                 ['name' => 'Growth Marketing', 'progress' => 75, 'image' => 'cohort-growth-marketing.png', 'slug' => 'growth-marketing'],
-                ['name' => 'Advanced SEO', 'progress' => 40, 'image' => 'cohort-advanced-seo.png', 'slug' => 'advanced-seo'],
+                ['name' => 'Advanced SEO', 'progress' => 40, 'image' => 'advanced-seo.png', 'slug' => 'advanced-seo'],
             ];
             @endphp
-            @foreach ($learning as $item)
+            @foreach ($cohorts as $cohort)
             <div class="bg-surface rounded-lg shadow-card p-5">
                 <div class="flex items-center gap-4">
-                    <img class="h-14 w-14 rounded-lg object-cover" src="{{ asset('assets/images/' . $item['image']) }}" alt="{{ $item['name'] }}">
+                    <img class="h-14 w-14 rounded-lg object-cover" src="{{ asset('assets/images/cohort-' . $cohort['slug'] . '.png') }}" alt="{{ $cohort['name'] }}">
                     <div class="flex-grow">
-                        <a href="{{ route('cohorts.show', ['slug' => $item['slug']]) }}" class="font-bold text-copy hover:text-primary">{{ $item['name'] }}</a>
+                        <a href="{{ route('cohorts.show', ['slug' => $cohort['slug']]) }}" class="font-bold text-copy hover:text-primary">{{ $cohort['name'] }}</a>
                         <div class="mt-2">
                             <div class="flex justify-between text-sm text-copy-lightest mb-1">
                                 <span>Progress</span>
-                                <span>{{ $item['progress'] }}%</span>
+                                <span>{{ $cohort['progress'] }}%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                <div class="bg-primary h-1.5 rounded-full" style="width: {{ $item['progress'] }}%"></div>
+                                <div class="bg-primary h-1.5 rounded-full" style="width: {{ $cohort['progress'] }}%"></div>
                             </div>
                         </div>
                     </div>

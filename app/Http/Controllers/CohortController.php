@@ -27,7 +27,6 @@ class CohortController extends Controller
      */
     public function show(string $slug): View
     {
-        // In a real application, you would find the cohort by its slug.
         // For this example, we'll just show the static detail page and pass some sample posts.
         $posts = [
             [
@@ -43,5 +42,23 @@ class CohortController extends Controller
         ];
         
         return view('pages.cohorts.show', ['posts' => $posts]);
+    }
+    
+    /**
+     * Display a specific assignment.
+     */
+    public function assignmentShow(string $slug, string $id): View
+    {
+        // In a real app, you'd find the assignment by its ID within the cohort scope.
+        $assignment = [
+            'id' => $id,
+            'title' => 'Week 1: Competitive Analysis Report',
+            'cohort' => 'Growth Marketing',
+            'due_date' => 'July 15, 2024, 11:59 PM',
+            'points' => 100,
+            'submitted_at' => null, // or a date string if submitted
+        ];
+
+        return view('pages.cohorts.assignment-show', ['assignment' => $assignment]);
     }
 }

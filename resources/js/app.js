@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    // 1. Mobile Sidebar
+    // --- 1. Mobile Sidebar ---
     const hamburgerButton = document.querySelector('#hamburger-button');
     const mobileSidebar = document.querySelector('#mobile-sidebar');
     const sidebarCloseButton = document.querySelector('#sidebar-close-button');
@@ -8,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const toggleSidebar = () => {
         if (!mobileSidebar || !sidebarOverlay) return;
-        const isOpen = !mobileSidebar.classList.contains('-translate-x-full');
+        const isOpen = mobileSidebar.classList.contains('translate-x-0');
         if (isOpen) {
             mobileSidebar.classList.remove('translate-x-0');
             mobileSidebar.classList.add('-translate-x-full');
@@ -28,57 +27,78 @@ document.addEventListener('DOMContentLoaded', () => {
         sidebarOverlay.addEventListener('click', toggleSidebar);
     }
 
-    // 2. Header Dropdown Mega Menus
-    const dropdownButtons = document.querySelectorAll('[data-dropdown-button]');
-    const allMenus = document.querySelectorAll('[data-dropdown-menu]');
-    let openMenu = null;
+    // --- 2. Desktop Header Mega Menus ---
+    const menuButtons = {
+        'cohorts-menu-button': 'cohorts-menu',
+        'community-menu-button': 'community-menu',
+    };
+    let openMenuId = null;
 
-    dropdownButtons.forEach(button => {
-        const menuId = button.getAttribute('data-dropdown-button');
-        const menu = document.getElementById(menuId);
-        const arrow = button.querySelector('svg:last-child');
-
-        if (!menu) return;
-        
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            
-            if (openMenu === menu) {
-                // Clicked the same button, so close it
-                menu.classList.add('hidden');
-                if (arrow) arrow.style.transform = 'rotate(0deg)';
-                openMenu = null;
-            } else {
-                // A different button was clicked, or no menu is open
-                // Hide all menus first
-                allMenus.forEach(m => m.classList.add('hidden'));
-                dropdownButtons.forEach(b => {
-                    const bArrow = b.querySelector('svg:last-child');
-                    if(bArrow) bArrow.style.transform = 'rotate(0deg)';
-                });
-
-                // Open the new menu
-                menu.classList.remove('hidden');
-                if (arrow) arrow.style.transform = 'rotate(180deg)';
-                openMenu = menu;
-            }
+    const closeAllMenus = () => {
+        document.querySelectorAll('[id$="-menu"]').forEach(menu => {
+            menu.classList.add('hidden');
         });
-    });
+        document.querySelectorAll('[id$="-menu-button"] svg').forEach(arrow => {
+             arrow.style.transform = 'rotate(0deg)';
+        });
+        openMenuId = null;
+    };
 
-    // Close dropdowns when clicking outside
+    Object.keys(menuButtons).forEach(buttonId => {
+        const button = document.getElementById(buttonId);
+        const menuId = menuButtons[buttonId];
+        const menu = document.getElementById(menuId);
+
+        if (button && menu) {
+            const arrow = button.querySelector('svg');
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (openMenuId === menuId) {
+                    closeAllMenus();
+                } else {
+                    closeAllMenus();
+                    menu.classList.remove('hidden');
+                    if(arrow) arrow.style.transform = 'rotate(180deg)';
+                    openMenuId = menuId;
+                }
+            });
+        }
+    });
+    
     document.addEventListener('click', (e) => {
-        if (openMenu && !openMenu.contains(e.target)) {
-            const openButton = document.querySelector(`[data-dropdown-button="${openMenu.id}"]`);
-            if (openButton && !openButton.contains(e.target)) {
-                openMenu.classList.add('hidden');
-                const arrow = openButton.querySelector('svg:last-child');
-                if (arrow) arrow.style.transform = 'rotate(0deg)';
-                openMenu = null;
-            }
+        if (openMenuId) {
+             closeAllMenus();
         }
     });
 
-    // 3. Generic Tabs Component Logic
+    // --- 3. Search Overlay ---
+    const searchOverlay = document.getElementById('search-overlay');
+    const searchInput = document.getElementById('search-input');
+    
+    const openSearch = () => {
+        if (!searchOverlay) return;
+        searchOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => searchInput?.focus(), 50);
+    };
+    
+    const closeSearch = () => {
+        if (!searchOverlay) return;
+        searchOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+
+    document.getElementById('desktop-search-button')?.addEventListener('click', openSearch);
+    document.getElementById('search-overlay-close')?.addEventListener('click', closeSearch);
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchOverlay && !searchOverlay.classList.contains('hidden')) {
+            closeSearch();
+        }
+    });
+
+
+    // --- 4. Generic Tabs Component Logic ---
     const tabContainers = document.querySelectorAll('[data-tab-container]');
     tabContainers.forEach(container => {
         const tabs = container.querySelectorAll('[data-tab]');
@@ -106,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 4. Showcase Modal Logic
+    // --- 5. Showcase Modal Logic ---
     const modal = document.querySelector('#showcase-modal');
     if(modal) {
         const modalTriggers = document.querySelectorAll('[data-modal-trigger]');
@@ -123,17 +143,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const openModal = (data) => {
             if (!data) return;
 
-            // Populate modal content
             if(modalImage) modalImage.src = data.image;
             if(modalTitle) modalTitle.textContent = data.title;
             if(modalAuthor) modalAuthor.textContent = data.author;
             if(modalAvatar) modalAvatar.src = data.avatar;
             if(modalDescription) modalDescription.textContent = data.description;
-            if(modalLikes) modalLikes.textContent = `Like (${data.likes})`;
+            if(modalLikes) modalLikes.innerHTML = `<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg> <span>Like (${data.likes})</span>`;
             if(modalComments) modalComments.textContent = `${data.comments} Comments`;
 
             if(modalTagsContainer) {
-                modalTagsContainer.innerHTML = ''; // Clear existing tags
+                modalTagsContainer.innerHTML = '';
                 data.tags.forEach(tagText => {
                     const tagEl = document.createElement('span');
                     tagEl.className = 'tag bg-gray-100 text-gray-800';
@@ -165,15 +184,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         modalCloseButtons.forEach(btn => btn.addEventListener('click', closeModal));
-
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
         });
-
         document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape" && !modal.classList.contains('hidden')) {
-                closeModal();
-            }
+            if (e.key === "Escape" && !modal.classList.contains('hidden')) closeModal();
         });
     }
+
 });

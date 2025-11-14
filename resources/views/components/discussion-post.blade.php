@@ -1,24 +1,24 @@
-@props(['cohort'])
+@props(['post'])
 
-<div class="bg-surface rounded-lg shadow-card overflow-hidden">
-    <a href="{{ route('cohorts.show', ['slug' => $cohort['slug']]) }}">
-        <img class="h-40 w-full object-cover" src="{{ asset('assets/images/' . $cohort['image']) }}" alt="{{ $cohort['name'] }}">
-    </a>
+<div class="bg-surface rounded-lg shadow-card">
     <div class="p-5">
-        <a href="{{ route('cohorts.show', ['slug' => $cohort['slug']]) }}">
-            <h3 class="font-bold text-lg text-copy">{{ $cohort['name'] }}</h3>
-        </a>
-        <p class="mt-1 text-sm text-copy-lightest">{{ $cohort['desc'] }}</p>
-        <div class="mt-4 flex items-center gap-4 text-sm text-copy-light">
-            <span>
-                <strong class="text-copy">{{ $cohort['members'] }}</strong> members
-            </span>
-            <span>
-                <strong class="text-copy">{{ $cohort['posts'] }}</strong> posts
-            </span>
+        <div class="flex items-center gap-3">
+            <img class="w-10 h-10 rounded-full object-cover" src="{{ asset('assets/images/avatars/' . $post['avatar']) }}" alt="{{ $post['author'] }}">
+            <div>
+                <p class="font-semibold text-copy">{{ $post['author'] }}</p>
+                <p class="text-xs text-copy-lightest">{{ $post['time'] }}</p>
+            </div>
         </div>
-        <div class="mt-5">
-            <a href="{{ route('cohorts.show', ['slug' => $cohort['slug']]) }}" class="btn-primary w-full text-sm">View Cohort</a>
-        </div>
+        <p class="mt-4 text-copy-light">{{ $post['content'] }}</p>
+    </div>
+    <div class="px-5 py-3 border-t border-border-color flex items-center gap-4">
+        <button class="btn-action">
+             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
+            <span>Like ({{ $post['likes'] }})</span>
+        </button>
+         <button class="btn-action">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.494.033.99.067 1.483.099z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0-1.6 1.123-2.994 2.707-3.227 1.068-.157 2.148-.279 3.238-.364.494-.033.99-.067 1.483-.099M21.75 12.76c0 1.6-1.123 2.994-2.707 3.227-1.068.157-2.148.279-3.238.364-.494.033-.99.067-1.483.099z" /><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12.76c0-1.6-1.123-2.994-2.707-3.227-1.068-.157-2.148-.279-3.238-.364-.494-.033-.99-.067-1.483-.099M2.25 12.76v-1.548c0-1.538 1.06-2.843 2.57-3.136a105.152 105.152 0 0 1 14.36 0c1.51.293 2.57 1.598 2.57 3.136v1.548" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14.25a.75.75 0 0 1-.75-.75V12a.75.75 0 0 1 1.5 0v1.5a.75.75 0 0 1-.75.75z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 14.25a.75.75 0 0 1-.75-.75V12a.75.75 0 0 1 1.5 0v1.5a.75.75 0 0 1-.75.75zM8.25 14.25a.75.75 0 0 1-.75-.75V12a.75.75 0 0 1 1.5 0v1.5a.75.75 0 0 1-.75.75z" /></svg>
+            <span>{{ $post['comments'] }} Comments</span>
+        </button>
     </div>
 </div>

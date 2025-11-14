@@ -1,169 +1,68 @@
 <?php
 
-/**
- * CONTROLLERS FOR EDUMARK PLATFORM - PART 1
- * Place in app/Http/Controllers/
- */
-
 namespace App\Http\Controllers;
 
-
-// 3. DiscussionController.php
-use App\Models\Discussion;
-use App\Models\Like;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class DiscussionController extends Controller
 {
-    public function index(Request $request): View
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): View
     {
-        $query = Discussion::with(['user', 'cohort', 'category', 'replies'])
-            ->latest();
-
-        // Filter by cohort
-        if ($request->has('cohort')) {
-            $query->where('cohort_id', $request->cohort);
-        }
-
-        // Filter by type
-        if ($request->has('type')) {
-            $query->where('type', $request->type);
-        }
-
-        // Search
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('content', 'like', "%{$search}%");
-            });
-        }
-
-        $discussions = $query->paginate(20);
-
-        $cohorts = Cohort::where('status', 'active')->get();
-
-        return view('discussions.index', compact('discussions', 'cohorts'));
+        $posts = [
+            [
+                'author' => 'Daniel Wilson', 'avatar' => 'daniel-wilson.jpg', 'time' => '3h ago',
+                'content' => "Just published my first blog post using the SEO techniques we learned in the 'Advanced SEO' cohort! It's about optimizing for local search. Would love to get some feedback from you all. Check it out and let me know what you think!",
+                'likes' => 12, 'comments' => 4,
+            ],
+            [
+                'author' => 'Sarah Miller', 'avatar' => 'sarah-miller.jpg', 'time' => '8h ago',
+                'content' => "I'm looking for a good video editing software for creating short-form content for social media. What are your top recommendations? Preferably something that's user-friendly but has powerful features.",
+                'likes' => 25, 'comments' => 11,
+            ],
+            [
+                'author' => 'Mike Johnson', 'avatar' => 'mike-johnson.jpg', 'time' => '1d ago',
+                'content' => "Excited to share a success story! After implementing the A/B testing framework from the 'Growth Marketing' cohort, we saw a 15% increase in our landing page conversion rate. Small changes, big impact! Never underestimate the power of data.",
+                'likes' => 48, 'comments' => 9,
+            ]
+        ];
+        return view('pages.community.discussion', ['posts' => $posts]);
     }
 
-    public function askTeacher(): View
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id): View
     {
-        $questions = Discussion::with(['user', 'cohort', 'replies'])
-            ->where('type', 'question')
-            ->latest()
-            ->paginate(20);
+        // In a real app, find the post and its comments by ID
+        $post = [
+            'id' => $id,
+            'title' => "I'm looking for a good video editing software...",
+            'author' => 'Sarah Miller',
+            'author_avatar' => 'sarah-miller.jpg',
+            'time' => '8 hours ago',
+            'content_html' => "<p>I'm looking for a good video editing software for creating short-form content for social media. What are your top recommendations? Preferably something that's user-friendly but has powerful features.</p><p>I've tried a few but haven't found the one that clicks. Any suggestions would be greatly appreciated!</p>",
+            'likes' => 25,
+            'comments_count' => 2,
+        ];
 
-        return view('discussions.ask-teacher', compact('questions'));
-    }
+        $comments = [
+            [
+                'author' => 'David Anderson', 'author_avatar' => 'david-anderson.jpg', 'time' => '7 hours ago',
+                'content' => 'For quick and easy edits on mobile, I highly recommend CapCut. For desktop, DaVinci Resolve has an amazing free version that is incredibly powerful.',
+            ],
+             [
+                'author' => 'Chris Lee', 'author_avatar' => 'chris-lee.jpg', 'time' => '5 hours ago',
+                'content' => 'Seconding DaVinci Resolve! It has a bit of a learning curve, but the results are professional-grade. Their color grading tools are industry standard.',
+            ],
+        ];
 
-    public function create(): View
-    {
-        $cohorts = auth()->user()->cohorts;
-        $categories = \App\Models\Category::where('is_active', true)->get();
-
-        return view('discussions.create', compact('cohorts', 'categories'));
-    }
-
-    public function store(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'type' => 'required|in:general,question,announcement',
-            'cohort_id' => 'nullable|exists:cohorts,id',
-            'category_id' => 'nullable|exists:categories,id',
+        return view('pages.community.discussion-show', [
+            'post' => $post,
+            'comments' => $comments
         ]);
-
-        $discussion = auth()->user()->discussions()->create($validated);
-
-        // Log activity
-        \App\Models\ActivityLog::log(
-            auth()->user(),
-            'discussion.created',
-            $discussion,
-            ['title' => $discussion->title],
-            5
-        );
-
-        return redirect()->route('discussions.show', $discussion)
-            ->with('success', 'Discussion created successfully!');
-    }
-
-    public function show(Discussion $discussion): View
-    {
-        $discussion->load(['user', 'cohort', 'category', 'likes']);
-        $discussion->incrementViews();
-
-        $replies = $discussion->replies()
-            ->with(['user', 'children.user', 'likes'])
-            ->whereNull('parent_id')
-            ->latest()
-            ->get();
-
-        return view('discussions.show', compact('discussion', 'replies'));
-    }
-
-    public function edit(Discussion $discussion): View
-    {
-        $this->authorize('update', $discussion);
-
-        $cohorts = auth()->user()->cohorts;
-        $categories = \App\Models\Category::where('is_active', true)->get();
-
-        return view('discussions.edit', compact('discussion', 'cohorts', 'categories'));
-    }
-
-    public function update(Request $request, Discussion $discussion): RedirectResponse
-    {
-        $this->authorize('update', $discussion);
-
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'type' => 'required|in:general,question,announcement',
-            'cohort_id' => 'nullable|exists:cohorts,id',
-            'category_id' => 'nullable|exists:categories,id',
-        ]);
-
-        $discussion->update($validated);
-
-        return redirect()->route('discussions.show', $discussion)
-            ->with('success', 'Discussion updated successfully!');
-    }
-
-    public function destroy(Discussion $discussion): RedirectResponse
-    {
-        $this->authorize('delete', $discussion);
-
-        $discussion->delete();
-
-        return redirect()->route('discussions.index')
-            ->with('success', 'Discussion deleted successfully!');
-    }
-
-    public function like(Discussion $discussion): RedirectResponse
-    {
-        $user = auth()->user();
-
-        $existingLike = $discussion->likes()->where('user_id', $user->id)->first();
-
-        if ($existingLike) {
-            $existingLike->delete();
-            $message = 'Like removed';
-        } else {
-            Like::create([
-                'user_id' => $user->id,
-                'likeable_id' => $discussion->id,
-                'likeable_type' => Discussion::class,
-            ]);
-            $message = 'Discussion liked!';
-
-            // Award points to discussion author
-            if ($discussion->user_id !== $user->id) {
-                $discussion->user->addPoints(2);
-            }
-        }
-
-        return back()->with('success', $message);
     }
 }
