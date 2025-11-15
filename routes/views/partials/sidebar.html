@@ -1,0 +1,100 @@
+{{-- 
+    This will be included in the main layout.
+    Corresponds to `Sidebar.tsx`
+--}}
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-40 flex w-64 -translate-x-full flex-col border-r border-gray-200 bg-white p-4 transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0">
+    <div class="mb-6 flex items-center justify-between lg:hidden">
+        {{-- Mobile sidebar header with close button --}}
+        <div class="flex items-center gap-2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 17L9 11L13 15L21 7" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15 7H21V13" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="text-xl font-bold text-gray-800">edumark</span>
+        </div>
+        <button id="sidebar-close-button" type="button" class="btn-ghost !rounded-full p-2" aria-label="Close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="flex-1 space-y-4 overflow-y-auto">
+        <div class="space-y-1 border-b border-gray-200 pb-4">
+            {{-- TODO: Add active class based on current route --}}
+            <a href="#" class="sidebar-link active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M10.273 4.313a.5.5 0 0 1 .447.273l.494.898a.5.5 0 0 1-.447.727H4.233a.5.5 0 0 1-.447-.727l.494-.898a.5.5 0 0 1 .447-.273h6.04zM4.46 8.824c.42-.455.955-.755 1.54-.755.843 0 1.54.55 1.54 1.252 0 .69-.43 1.22-1.227 1.22-1.05 0-1.74-.87-1.74-1.732 0-.21.03-.412.087-.6z"/><path d="M10.451 8.068c.585 0 1.12.3 1.54.755.057.188.087.39.087.6 0 .862-.69 1.732-1.74 1.732-.797 0-1.227-.53-1.227-1.22 0-.702.697-1.252 1.54-1.252z"/></svg>
+                <span>Welcome</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M15 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.004-.014.004H15a1 1 0 0 1 0-2c0-.821-.624-2.22-2.19-2.79.597-.577.926-1.428.926-2.395 0-1.591-1.272-2.885-2.885-2.885-1.613 0-2.885 1.294-2.885 2.885 0 .967.33 1.818.926 2.395C3.624 9.78 3 11.179 3 12a1 1 0 1 1 0-2c0-1.11.46-2.553 1.558-3.468C3.89 7.64 3.5 6.5 3.5 5.285 3.5 3.072 5.14 1.115 7.333 1.115s3.833 1.957 3.833 4.17c0 1.215-.39 2.355-.989 3.248.593.525.989 1.273.989 2.097z"/></svg>
+                <span>Student Directory</span>
+            </a>
+        </div>
+        
+        <div class="space-y-1 border-b border-gray-200 pb-4">
+            <h3 class="px-2 pt-2 text-xs font-semibold uppercase text-gray-500">Academy</h3>
+            <a href="#" class="sidebar-link">
+               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/></svg>
+               <span>Cohorts</span>
+            </a>
+            <a href="#" class="sidebar-link">
+               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/></svg>
+               <span>Ask Your Teacher</span>
+            </a>
+        </div>
+        
+        <div class="space-y-1 border-b border-gray-200 pb-4">
+            <h3 class="px-2 pt-2 text-xs font-semibold uppercase text-gray-500">Cohorts</h3>
+            {{-- TODO: Loop through cohorts --}}
+            <a href="#" class="sidebar-cohort-link">
+                <span class="sidebar-cohort-number">1</span>
+                <span class="truncate">Cohort 1: Growth Marketing</span>
+            </a>
+            <a href="#" class="sidebar-cohort-link">
+                <span class="sidebar-cohort-number">2</span>
+                <span class="truncate">Cohort 2: Advanced SEO</span>
+            </a>
+            <a href="#" class="sidebar-cohort-link">
+                <span class="sidebar-cohort-number">3</span>
+                <span class="truncate">Cohort 3: Video Marketing</span>
+            </a>
+            <a href="#" class="sidebar-cohort-link">
+                <span class="sidebar-cohort-number">4</span>
+                <span class="truncate">Cohort 4: Content Marketing</span>
+            </a>
+        </div>
+        
+        <div class="space-y-1">
+            <h3 class="px-2 pt-2 text-xs font-semibold uppercase text-gray-500">Community</h3>
+            <a href="#" class="sidebar-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586L.646 14.939a.5.5 0 0 1-.708-.708L2.293 12H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h1.172a1 1 0 0 1 .707.293l2.414 2.414a.5.5 0 0 0 .708 0l2.414-2.414A1 1 0 0 1 12.172 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/></svg>
+                <span>Discussion</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/></svg>
+                <span>Events</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16a.5.5 0 0 1-.302-.112l-3.262-2.433a.5.5 0 0 1 .604-.81L8 14.587l2.96-2.22a.5.5 0 0 1 .604.81L8.302 15.888A.5.5 0 0 1 8 16M4.93 4.93a.5.5 0 0 1 .707 0L8 7.224l2.363-2.294a.5.5 0 0 1 .707.707L8.707 8l2.294 2.363a.5.5 0 0 1-.707.707L8 8.707l-2.363 2.294a.5.5 0 0 1-.707-.707L7.293 8 4.93 5.637a.5.5 0 0 1 0-.707m8-.414A.5.5 0 0 1 13.5 5.5v5a.5.5 0 0 1-1 0v-5a.5.5 0 0 1 .5-.5M2.5 5.5A.5.5 0 0 1 3 5v5a.5.5 0 0 1-1 0v-5a.5.5 0 0 1 .5-.5m8-4A.5.5 0 0 1 11.5 2h-7a.5.5 0 0 1 0-1h7a.5.5 0 0 1 .5.5"/></svg>
+                <span>Spotlight</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.708.819-1z"/><path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4 4 0 0 1-.82-1H12a3 3 0 0 0 0-6z"/></svg>
+                <span>Connect</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M3.5 2A1.5 1.5 0 0 0 2 3.5v9A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 2zM3 3.5A1.5 1.5 0 0 1 4.5 2H6v12H4.5A1.5 1.5 0 0 1 3 12.5zM13 12.5a1.5 1.5 0 0 1-1.5 1.5H8V2h3.5A1.5 1.5 0 0 1 13 3.5z"/></svg>
+                <span>Showcase</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5zM12 4H4a.5.5 0 0 0 0 1h8a.5.5 0 0 0 0-1m-8 3h8a.5.5 0 0 0 0-1H4a.5.5 0 0 0 0 1m0 3h4a.5.5 0 0 0 0 1H4a.5.5 0 0 0 0-1"/></svg>
+                <span>Careers</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-auto flex-shrink-0 pt-4 text-xs text-gray-500">
+        © Copyright 2025
+    </div>
+</aside>

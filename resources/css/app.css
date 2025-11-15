@@ -63,13 +63,13 @@
         @apply bg-gray-50 border border-gray-100 text-copy-lighter px-3 py-1.5 rounded-md text-sm font-medium hover:bg-gray-200 flex items-center gap-1.5;
     }
     .nav-link {
-        @apply flex items-center gap-1 text-copy-lighter font-medium hover:text-copy-default transition-colors;
+        @apply flex items-center gap-1 text-copy-lighter font-medium hover:text-gray-900 transition-colors;
     }
     .sidebar-link {
         @apply flex items-center gap-3 px-2 py-2 rounded-md text-copy-light font-medium text-sm hover:bg-gray-50;
     }
     .sidebar-link.active {
-        @apply bg-gray-100 text-copy-default;
+        @apply bg-gray-100 text-gray-900;
     }
     .sidebar-cohort-link {
         @apply flex items-center gap-2.5 px-2 py-1.5 rounded-md text-copy-light font-medium text-sm hover:bg-gray-50;
@@ -78,7 +78,7 @@
         @apply bg-gray-100;
     }
     .tab-button {
-        @apply px-4 py-2 font-medium text-copy-lightest border-b-2 border-transparent hover:text-copy-default;
+        @apply px-4 py-2 font-medium text-copy-lightest border-b-2 border-transparent hover:text-gray-900;
     }
     .tab-button.active {
         @apply text-primary border-primary;

@@ -1,0 +1,67 @@
+@extends('layouts.app')
+
+@section('title', 'Careers')
+
+@section('content')
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="bg-surface rounded-lg shadow-card p-6">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-copy">Careers</h1>
+                <p class="mt-1 text-copy-light">Find your next opportunity and join our talented community.</p>
+            </div>
+             <div class="flex items-center gap-2">
+                <button class="btn-secondary">
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                    </svg>
+                    <span>Filter</span>
+                </button>
+                <button class="btn-primary">Post a Job</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jobs List -->
+    <div class="bg-surface rounded-lg shadow-card">
+        <ul role="list" class="divide-y divide-border-color">
+            @php
+            $jobs = [
+                ['title' => 'Product Marketing Manager', 'company' => 'Bettermode', 'location' => 'Remote (US)', 'type' => 'Full-time', 'logo' => 'bettermode-icon.png'],
+                ['title' => 'Senior SEO Specialist', 'company' => 'Growth Experts', 'location' => 'New York, NY', 'type' => 'Full-time', 'logo' => ''],
+                ['title' => 'Content Creator (Part-time)', 'company' => 'Media Co.', 'location' => 'Remote', 'type' => 'Part-time', 'logo' => ''],
+                ['title' => 'Digital Marketing Intern', 'company' => 'Startup Inc.', 'location' => 'San Francisco, CA', 'type' => 'Internship', 'logo' => ''],
+            ];
+            @endphp
+
+            @foreach ($jobs as $job)
+            <li class="p-6 hover:bg-gray-50 transition-colors">
+                <a href="{{ route('academy.career.detail', ['id' => 1]) }}" class="flex flex-col sm:flex-row items-start gap-4">
+                    <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                        @if($job['logo'])
+                            <img src="{{ asset('assets/images/' . $job['logo']) }}" alt="{{ $job['company'] }}" class="h-6 w-6 object-contain">
+                        @else
+                             <svg class="w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18h16.5a1.5 1.5 0 0 1 1.5 1.5v16.5a1.5 1.5 0 0 1-1.5 1.5H3.75A1.5 1.5 0 0 1 2.25 19.5V4.5A1.5 1.5 0 0 1 3.75 3Zm0 0h16.5M3.75 6h16.5" />
+                            </svg>
+                        @endif
+                    </div>
+                    <div class="flex-grow">
+                        <p class="font-semibold text-copy">{{ $job['title'] }}</p>
+                        <div class="mt-1 flex items-center gap-x-4 gap-y-1 text-sm text-copy-lightest flex-wrap">
+                            <span>{{ $job['company'] }}</span>
+                            <span class="text-gray-300">•</span>
+                            <span>{{ $job['location'] }}</span>
+                        </div>
+                    </div>
+                    <div class="mt-2 sm:mt-0">
+                        <span class="tag bg-primary-50 text-primary-800">{{ $job['type'] }}</span>
+                    </div>
+                </a>
+            </li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+@endsection

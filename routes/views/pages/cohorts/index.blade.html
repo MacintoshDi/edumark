@@ -1,0 +1,62 @@
+@extends('layouts.app')
+
+@section('title', 'Cohorts')
+
+@section('content')
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="bg-surface rounded-lg shadow-card p-6">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-copy">Cohorts</h1>
+                <p class="mt-1 text-copy-light">Browse and join cohorts to learn with your peers.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="btn-secondary">
+                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                    </svg>
+                    <span>Filter</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cohorts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @php
+            $cohorts = [
+                ['name' => 'Growth Marketing', 'desc' => 'Learn the fundamentals of growing a business online.', 'members' => 128, 'posts' => 45, 'image' => 'cohort-growth-marketing.png', 'slug' => 'growth-marketing'],
+                ['name' => 'Advanced SEO', 'desc' => 'Master search engine optimization techniques.', 'members' => 92, 'posts' => 31, 'image' => 'cohort-advanced-seo.png', 'slug' => 'advanced-seo'],
+                ['name' => 'Video Marketing', 'desc' => 'Create and distribute compelling video content.', 'members' => 78, 'posts' => 22, 'image' => 'cohort-video-marketing.png', 'slug' => 'video-marketing'],
+                ['name' => 'Content Marketing', 'desc' => 'Develop a content strategy that drives results.', 'members' => 150, 'posts' => 67, 'image' => 'cohort-content-marketing.png', 'slug' => 'content-marketing'],
+            ];
+        @endphp
+
+        @foreach ($cohorts as $cohort)
+        <div class="bg-surface rounded-lg shadow-card overflow-hidden">
+            <a href="{{ route('cohorts.show', ['slug' => $cohort['slug']]) }}">
+                <img class="h-40 w-full object-cover" src="{{ asset('assets/images/' . $cohort['image']) }}" alt="{{ $cohort['name'] }}">
+            </a>
+            <div class="p-5">
+                <a href="{{ route('cohorts.show', ['slug' => $cohort['slug']]) }}">
+                    <h3 class="font-bold text-lg text-copy">{{ $cohort['name'] }}</h3>
+                </a>
+                <p class="mt-1 text-sm text-copy-lightest">{{ $cohort['desc'] }}</p>
+                <div class="mt-4 flex items-center gap-4 text-sm text-copy-light">
+                    <span>
+                        <strong class="text-copy">{{ $cohort['members'] }}</strong> members
+                    </span>
+                    <span>
+                        <strong class="text-copy">{{ $cohort['posts'] }}</strong> posts
+                    </span>
+                </div>
+                <div class="mt-5">
+                    <a href="{{ route('cohorts.show', ['slug' => $cohort['slug']]) }}" class="btn-primary w-full text-sm">View Cohort</a>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endsection

@@ -1,0 +1,104 @@
+/* Assumes fonts are downloaded to public/assets/fonts/ */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/Inter-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/assets/fonts/Inter-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/assets/fonts/Inter-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/assets/fonts/Inter-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/assets/fonts/Inter-ExtraBold.woff2') format('woff2');
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-background font-sans text-copy-light antialiased;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-semibold text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+    }
+    .btn-primary {
+        @apply bg-primary text-white border border-transparent hover:bg-primary-darker;
+    }
+    .btn-secondary {
+        @apply bg-surface text-copy-light border border-gray-300 hover:bg-gray-50;
+    }
+    .btn-icon {
+        @apply p-2 rounded-full border border-gray-300 bg-transparent text-copy-lighter hover:bg-gray-100;
+    }
+    .btn-action {
+        @apply bg-gray-50 border border-gray-100 text-copy-lighter px-3 py-1.5 rounded-md text-sm font-medium hover:bg-gray-200 flex items-center gap-1.5;
+    }
+    .nav-link {
+        @apply flex items-center gap-1 text-copy-lighter font-medium hover:text-copy-default transition-colors;
+    }
+    .sidebar-link {
+        @apply flex items-center gap-3 px-2 py-2 rounded-md text-copy-light font-medium text-sm hover:bg-gray-50;
+    }
+    .sidebar-link.active {
+        @apply bg-gray-100 text-copy-default;
+    }
+    .sidebar-cohort-link {
+        @apply flex items-center gap-2.5 px-2 py-1.5 rounded-md text-copy-light font-medium text-sm hover:bg-gray-50;
+    }
+    .sidebar-cohort-link.active {
+        @apply bg-gray-100;
+    }
+    .tab-button {
+        @apply px-4 py-2 font-medium text-copy-lightest border-b-2 border-transparent hover:text-copy-default;
+    }
+    .tab-button.active {
+        @apply text-primary border-primary;
+    }
+    .tag {
+        @apply inline-block px-2.5 py-0.5 rounded-full text-xs font-medium;
+    }
+}
+
+@layer utilities {
+    .header-shape {
+        @apply absolute rounded-full bg-white/50;
+    }
+    .header-shape-1 {
+        @apply w-52 h-52 -top-12 -right-12;
+    }
+    .header-shape-2 {
+        @apply w-40 h-40 top-20 -right-20;
+    }
+    .header-shape-3 {
+        @apply w-24 h-24 top-5 right-24;
+    }
+}

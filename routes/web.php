@@ -1,41 +1,34 @@
 <?php
 
-use App\Http\Controllers\CareerController;
-use App\Http\Controllers\CohortController;
-use App\Http\Controllers\DiscussionController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
+// Home
+Route::view('/', 'pages.home')->name('home');
 
-// --- Static & Community Pages ---
-Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/login', [PageController::class, 'login'])->name('login');
-Route::get('/events', [PageController::class, 'events'])->name('community.events');
-Route::get('/spotlight', [PageController::class, 'spotlight'])->name('community.spotlight');
-Route::get('/connect', [PageController::class, 'connect'])->name('community.connect');
-Route::get('/showcase', [PageController::class, 'showcase'])->name('community.showcase');
-Route::get('/ask-your-teacher', [PageController::class, 'askTeacher'])->name('academy.ask-teacher');
+// Students
+Route::view('/students', 'pages.students.index')->name('students.index');
 
-// --- Resourceful Controllers ---
+// Cohorts
+Route::view('/cohorts', 'pages.cohorts.index')->name('cohorts.index');
+Route::view('/cohorts/{slug}', 'pages.cohorts.show')->name('cohorts.show');
 
-// Student Directory
-Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+// Community
+Route::view('/discussion', 'pages.community.discussion')->name('community.discussion');
+Route::view('/events', 'pages.community.events')->name('community.events');
+Route::view('/spotlight', 'pages.community.spotlight')->name('community.spotlight');
+Route::view('/connect', 'pages.community.connect')->name('community.connect');
+Route::view('/showcase', 'pages.community.showcase')->name('community.showcase');
 
-// Discussions
-Route::get('/discussion', [DiscussionController::class, 'index'])->name('community.discussion');
-Route::get('/discussion/{id}', [DiscussionController::class, 'show'])->name('community.discussion.show');
+// Academy
+Route::view('/ask-your-teacher', 'pages.academy.ask-teacher')->name('academy.ask-teacher');
+Route::view('/careers', 'pages.academy.careers')->name('academy.careers');
+Route::view('/careers/{id}', 'pages.academy.career-detail')->name('academy.career.detail');
 
-// Cohorts & Assignments
-Route::get('/cohorts', [CohortController::class, 'index'])->name('cohorts.index');
-Route.get('/cohorts/{slug}', [CohortController::class, 'show'])->name('cohorts.show');
-Route.get('/cohorts/{slug}/assignments/{id}', [CohortController::class, 'assignmentShow'])->name('cohorts.assignment.show');
+// Auth
+Route::get('/login', function () {
+    return redirect('https://edumark.bettermode.io/auth/login');
+})->name('login');
 
-// Careers
-Route::get('/careers', [CareerController::class, 'index'])->name('academy.careers.index');
-Route::get('/careers/{id}', [CareerController::class, 'show'])->name('academy.careers.show');
+Route::get('/cohort-2', function () {
+    return view('pages.cohorts.cohort-2');
+})->name('cohort-2');
