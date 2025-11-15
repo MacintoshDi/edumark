@@ -47,7 +47,7 @@
                         
                         <div class="grid grid-cols-2 gap-6">
                             <!-- Cohort 1: Growth Marketing -->
-                            <a href="{{ route('cohorts.show', 'growth-marketing') }}" class="group flex gap-4 p-4 rounded-xl hover:bg-indigo-50 transition-colors">
+                            <a href="{{ route('cohorts.growth-marketing') }}" class="group flex gap-4 p-4 rounded-xl hover:bg-indigo-50 transition-colors">
                                 <img src="{{ asset('assets/images/cohort-growth-marketing.png') }}" alt="Growth Marketing" class="h-12 w-12 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2 mb-1">
@@ -63,7 +63,7 @@
                             </a>
                             
                             <!-- Cohort 2: Advanced SEO -->
-                            <a href="{{ route('cohorts.show', 'advanced-seo') }}" class="group flex gap-4 p-4 rounded-xl hover:bg-purple-50 transition-colors">
+                            <a href="{{ route('cohorts.advanced-seo') }}" class="group flex gap-4 p-4 rounded-xl hover:bg-purple-50 transition-colors">
                                 <img src="{{ asset('assets/images/cohort-advanced-seo.png') }}" alt="Advanced SEO" class="h-12 w-12 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2 mb-1">
@@ -79,7 +79,7 @@
                             </a>
                             
                             <!-- Cohort 3: Video Marketing -->
-                            <a href="{{ route('cohorts.show', 'video-marketing') }}" class="group flex gap-4 p-4 rounded-xl hover:bg-pink-50 transition-colors">
+                            <a href="{{ route('cohorts.video-marketing') }}" class="group flex gap-4 p-4 rounded-xl hover:bg-pink-50 transition-colors">
                                 <img src="{{ asset('assets/images/cohort-video-marketing.png') }}" alt="Video Marketing" class="h-12 w-12 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2 mb-1">
@@ -95,7 +95,7 @@
                             </a>
                             
                             <!-- Cohort 4: Content Marketing -->
-                            <a href="{{ route('cohorts.show', 'content-marketing') }}" class="group flex gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors">
+                            <a href="{{ route('cohorts.content-marketing') }}" class="group flex gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors">
                                 <img src="{{ asset('assets/images/cohort-content-marketing.png') }}" alt="Content Marketing" class="h-12 w-12 rounded-lg object-cover flex-shrink-0">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2 mb-1">

@@ -8,9 +8,25 @@ Route::view('/', 'pages.home')->name('home');
 // Students
 Route::view('/students', 'pages.students.index')->name('students.index');
 
-// Cohorts
+// Cohorts - список всех когорт
 Route::view('/cohorts', 'pages.cohorts.index')->name('cohorts.index');
-Route::view('/cohorts/{slug}', 'pages.cohorts.show')->name('cohorts.show');
+
+// Конкретные когорты (убрали старый динамический роут)
+Route::get('/cohorts/growth-marketing', function () {
+    return view('pages.cohorts.growth-marketing');
+})->name('cohorts.growth-marketing');
+
+Route::get('/cohorts/advanced-seo', function () {
+    return view('pages.cohorts.advanced-seo');
+})->name('cohorts.advanced-seo');
+
+Route::get('/cohorts/video-marketing', function () {
+    return view('pages.cohorts.video-marketing');
+})->name('cohorts.video-marketing');
+
+Route::get('/cohorts/content-marketing', function () {
+    return view('pages.cohorts.content-marketing');
+})->name('cohorts.content-marketing');
 
 // Community
 Route::view('/discussion', 'pages.community.discussion')->name('community.discussion');
@@ -24,11 +40,10 @@ Route::view('/ask-your-teacher', 'pages.academy.ask-teacher')->name('academy.ask
 Route::view('/careers', 'pages.academy.careers')->name('academy.careers');
 Route::view('/careers/{id}', 'pages.academy.career-detail')->name('academy.career.detail');
 
+// Student Directory
+Route::view('/student-directory', 'pages.student-directory')->name('student-directory');
+
 // Auth
 Route::get('/login', function () {
     return redirect('https://edumark.bettermode.io/auth/login');
 })->name('login');
-
-Route::get('/cohort-2', function () {
-    return view('pages.cohorts.cohort-2');
-})->name('cohort-2');

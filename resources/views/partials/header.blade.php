@@ -1,0 +1,140 @@
+<header class="bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            
+            {{-- Logo --}}
+            <div class="flex items-center gap-8">
+                <a href="{{ route('welcome') }}" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold">edumark</span>
+                </a>
+
+                {{-- Navigation --}}
+                <nav class="hidden md:flex items-center gap-6">
+                    {{-- Cohorts Dropdown --}}
+                    <div x-data="{ open: false }" @click.away="open = false" class="relative">
+                        <button @click="open = !open" class="flex items-center gap-1 hover:text-white/80 transition-colors">
+                            Cohorts
+                            <svg class="w-4 h-4" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div x-show="open" 
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 translate-y-1"
+                             x-transition:enter-end="opacity-100 translate-y-0"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100 translate-y-0"
+                             x-transition:leave-end="opacity-0 translate-y-1"
+                             class="absolute left-0 mt-2 w-80 bg-white rounded-xl shadow-xl py-2 z-50"
+                             x-cloak>
+                            <a href="{{ route('cohorts.growth-marketing') }}" class="block px-4 py-3 hover:bg-gray-50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-indigo-600 font-bold">1</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Growth Marketing</div>
+                                        <div class="text-xs text-gray-500">Elevate your skills with cutting-edge strategies</div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="{{ route('cohorts.advanced-seo') }}" class="block px-4 py-3 hover:bg-gray-50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-purple-600 font-bold">2</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Advanced SEO</div>
+                                        <div class="text-xs text-gray-500">Master the art of SEO with expert techniques</div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="{{ route('cohorts.video-marketing') }}" class="block px-4 py-3 hover:bg-gray-50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-pink-600 font-bold">3</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Video Marketing</div>
+                                        <div class="text-xs text-gray-500">Harness the power of video to engage, inspire</div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="{{ route('cohorts.content-marketing') }}" class="block px-4 py-3 hover:bg-gray-50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-orange-600 font-bold">4</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Content Marketing</div>
+                                        <div class="text-xs text-gray-500">Create compelling content that captivates</div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="border-t border-gray-100 mt-2 pt-2">
+                                <a href="{{ route('cohorts') }}" class="block px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 transition-colors font-medium">
+                                    Browse All Cohorts →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Community Dropdown --}}
+                    <div x-data="{ open: false }" @click.away="open = false" class="relative">
+                        <button @click="open = !open" class="flex items-center gap-1 hover:text-white/80 transition-colors">
+                            Community
+                            <svg class="w-4 h-4" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div x-show="open" 
+                             x-transition
+                             class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 z-50"
+                             x-cloak>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Discussion</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Events</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Spotlight</a>
+                        </div>
+                    </div>
+
+                    {{-- Connect Dropdown --}}
+                    <div x-data="{ open: false }" @click.away="open = false" class="relative">
+                        <button @click="open = !open" class="flex items-center gap-1 hover:text-white/80 transition-colors">
+                            Connect
+                            <svg class="w-4 h-4" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div x-show="open" 
+                             x-transition
+                             class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 z-50"
+                             x-cloak>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Connect</a>
+                            <a href="{{ route('student-directory') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Student Directory</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Showcase</a>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('ask-your-teacher') }}" class="hover:text-white/80 transition-colors">Ask Your Teacher</a>
+                </nav>
+            </div>
+
+            {{-- Search & Login --}}
+            <div class="flex items-center gap-4">
+                <button class="p-2 hover:bg-white/10 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+                <a href="{{ route('login') }}" class="px-4 py-2 bg-white text-purple-600 rounded-lg hover:bg-white/90 font-medium transition-colors">
+                    Log in
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

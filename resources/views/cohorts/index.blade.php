@@ -1,120 +1,94 @@
-{{-- resources/views/cohorts/index.blade.php --}}
-<x-app-layout>
-    <x-slot name="title">Cohorts</x-slot>
+<x-layouts.app title="All Cohorts">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <header class="mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">All Cohorts</h1>
+            <p class="text-lg text-gray-600">Choose your learning path and join a community of marketers</p>
+        </header>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
-            <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">Cohorts</h1>
-                <p class="text-gray-600">Browse and enroll in our learning cohorts</p>
-            </div>
-
-            <!-- Filters -->
-            <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-                <form method="GET" action="{{ route('cohorts.index') }}" class="flex flex-wrap gap-4">
-                    <select name="category" class="rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">All Categories</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                            @foreach($category->children as $child)
-                                <option value="{{ $child->id }}" {{ request('category') == $child->id ? 'selected' : '' }}>
-                                    &nbsp;&nbsp;→ {{ $child->name }}
-                                </option>
-                            @endforeach
-                        @endforeach
-                    </select>
-
-                    <select name="status" class="rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">All Status</option>
-                        <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>Upcoming</option>
-                        <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
-                    </select>
-
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                        Apply Filters
-                    </button>
-                    
-                    @if(request()->hasAny(['category', 'status']))
-                    <a href="{{ route('cohorts.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
-                        Clear Filters
-                    </a>
-                    @endif
-                </form>
-            </div>
-
-            <!-- Cohorts Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @forelse($cohorts as $cohort)
-                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition">
-                    <div class="p-6">
-                        <!-- Badge -->
-                        <div class="flex items-center justify-between mb-4">
-                            @if($cohort->category)
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {{ $cohort->category->name }}
-                            </span>
-                            @endif
-                            <span class="text-xs font-medium {{ $cohort->status === 'active' ? 'text-green-600' : 'text-gray-600' }}">
-                                {{ ucfirst($cohort->status) }}
-                            </span>
+        <div class="grid md:grid-cols-2 gap-8">
+            
+            {{-- Cohort 1: Growth Marketing --}}
+            <article class="bg-white rounded-2xl border-2 border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:border-indigo-500">
+                <div class="h-48 bg-gradient-to-br from-indigo-500 to-purple-600"></div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-indigo-500 text-white rounded-xl flex items-center justify-center text-2xl font-bold">
+                            1
                         </div>
-
-                        <!-- Title -->
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $cohort->name }}</h3>
-                        
-                        <!-- Description -->
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ $cohort->description }}</p>
-
-                        <!-- Meta Info -->
-                        <div class="space-y-2 text-sm text-gray-500 mb-4">
-                            @if($cohort->start_date)
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                                Starts {{ $cohort->start_date->format('M d, Y') }}
-                            </div>
-                            @endif
-                            
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                                </svg>
-                                {{ $cohort->enrolledCount() }} / {{ $cohort->max_students ?? '∞' }} students
-                            </div>
-
-                            @if($cohort->price)
-                            <div class="text-lg font-bold text-blue-600 mt-2">
-                                ${{ number_format($cohort->price, 2) }}
-                            </div>
-                            @endif
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Growth Marketing</h2>
+                            <p class="text-sm text-gray-500">3 members • 10 posts</p>
                         </div>
-
-                        <!-- Action Button -->
-                        <a href="{{ route('cohorts.show', $cohort->slug) }}" 
-                           class="block w-full text-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
-                            View Details
-                        </a>
                     </div>
+                    <p class="text-gray-600 mb-6">Elevate your skills with cutting-edge strategies for unparalleled growth success</p>
+                    <a href="{{ route('cohorts.growth-marketing') }}" class="block w-full px-6 py-3 bg-indigo-600 text-white text-center rounded-lg hover:bg-indigo-700 font-medium transition-colors">
+                        View Cohort
+                    </a>
                 </div>
-                @empty
-                <div class="col-span-3 text-center py-12">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                    </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No cohorts found</h3>
-                    <p class="mt-1 text-sm text-gray-500">Try adjusting your filters</p>
-                </div>
-                @endforelse
-            </div>
+            </article>
 
-            <!-- Pagination -->
-            <div class="mt-8">
-                {{ $cohorts->links() }}
-            </div>
+            {{-- Cohort 2: Advanced SEO --}}
+            <article class="bg-white rounded-2xl border-2 border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:border-purple-500">
+                <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-600"></div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-purple-500 text-white rounded-xl flex items-center justify-center text-2xl font-bold">
+                            2
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Advanced SEO</h2>
+                            <p class="text-sm text-gray-500">3 members • 5 posts</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">Master the art of SEO with expert techniques for top rankings</p>
+                    <a href="{{ route('cohorts.advanced-seo') }}" class="block w-full px-6 py-3 bg-purple-600 text-white text-center rounded-lg hover:bg-purple-700 font-medium transition-colors">
+                        View Cohort
+                    </a>
+                </div>
+            </article>
+
+            {{-- Cohort 3: Video Marketing --}}
+            <article class="bg-white rounded-2xl border-2 border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:border-pink-500">
+                <div class="h-48 bg-gradient-to-br from-pink-500 to-rose-600"></div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-pink-500 text-white rounded-xl flex items-center justify-center text-2xl font-bold">
+                            3
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Video Marketing</h2>
+                            <p class="text-sm text-gray-500">3 members • 5 posts</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">Harness the power of video to engage, inspire, and convert</p>
+                    <a href="{{ route('cohorts.video-marketing') }}" class="block w-full px-6 py-3 bg-pink-600 text-white text-center rounded-lg hover:bg-pink-700 font-medium transition-colors">
+                        View Cohort
+                    </a>
+                </div>
+            </article>
+
+            {{-- Cohort 4: Content Marketing --}}
+            <article class="bg-white rounded-2xl border-2 border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:border-orange-500">
+                <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600"></div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-orange-500 text-white rounded-xl flex items-center justify-center text-2xl font-bold">
+                            4
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Content Marketing</h2>
+                            <p class="text-sm text-gray-500">3 members • 5 posts</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">Create compelling content that captivates audiences and drives results</p>
+                    <a href="{{ route('cohorts.content-marketing') }}" class="block w-full px-6 py-3 bg-orange-600 text-white text-center rounded-lg hover:bg-orange-700 font-medium transition-colors">
+                        View Cohort
+                    </a>
+                </div>
+            </article>
+
         </div>
-    </div>
-</x-app-layout>
+
+    </main>
+</x-layouts.app>

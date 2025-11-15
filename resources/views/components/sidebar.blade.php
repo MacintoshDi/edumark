@@ -72,28 +72,28 @@
             <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Your Cohorts</h3>
             <nav class="space-y-1">
                 <!-- Cohort 1 -->
-                <a href="{{ route('cohorts.show', 'growth-marketing') }}" 
+                <a href="{{ route('cohorts.growth-marketing') }}" 
                    class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->is('cohorts/growth-marketing*') ? 'bg-indigo-50 text-indigo-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
                     <img src="{{ asset('assets/images/cohort-growth-marketing.png') }}" alt="Growth Marketing" class="h-6 w-6 rounded-md object-cover flex-shrink-0">
                     <span class="truncate">Growth Marketing</span>
                 </a>
                 
                 <!-- Cohort 2 -->
-                <a href="{{ route('cohorts.show', 'advanced-seo') }}" 
+                <a href="{{ route('cohorts.advanced-seo') }}" 
                    class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->is('cohorts/advanced-seo*') ? 'bg-indigo-50 text-indigo-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
                     <img src="{{ asset('assets/images/cohort-advanced-seo.png') }}" alt="Advanced SEO" class="h-6 w-6 rounded-md object-cover flex-shrink-0">
                     <span class="truncate">Advanced SEO</span>
                 </a>
                 
                 <!-- Cohort 3 -->
-                <a href="{{ route('cohorts.show', 'video-marketing') }}" 
+                <a href="{{ route('cohorts.video-marketing') }}" 
                    class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->is('cohorts/video-marketing*') ? 'bg-indigo-50 text-indigo-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
                     <img src="{{ asset('assets/images/cohort-video-marketing.png') }}" alt="Video Marketing" class="h-6 w-6 rounded-md object-cover flex-shrink-0">
                     <span class="truncate">Video Marketing</span>
                 </a>
                 
                 <!-- Cohort 4 -->
-                <a href="{{ route('cohorts.show', 'content-marketing') }}" 
+                <a href="{{ route('cohorts.content-marketing') }}" 
                    class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->is('cohorts/content-marketing*') ? 'bg-indigo-50 text-indigo-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
                     <img src="{{ asset('assets/images/cohort-content-marketing.png') }}" alt="Content Marketing" class="h-6 w-6 rounded-md object-cover flex-shrink-0">
                     <span class="truncate">Content Marketing</span>
