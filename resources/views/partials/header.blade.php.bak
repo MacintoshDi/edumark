@@ -96,9 +96,9 @@
                              x-transition
                              class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 z-50"
                              x-cloak>
-                            <a href="{{ route('discussion') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Discussion</a>
-                            <a href="{{ route('events') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Events</a>
-                            <a href="{{ route('spotlight') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Spotlight</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Discussion</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Events</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Spotlight</a>
                         </div>
                     </div>
 
@@ -114,9 +114,9 @@
                              x-transition
                              class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 z-50"
                              x-cloak>
-                            <a href="{{ route('connect') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Connect</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Connect</a>
                             <a href="{{ route('student-directory') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Student Directory</a>
-                            <a href="{{ route('showcase') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Showcase</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Showcase</a>
                         </div>
                     </div>
 

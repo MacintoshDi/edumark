@@ -1,15 +1,26 @@
 <x-layouts.app title="Cohort 2: Advanced SEO">
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
+        {{-- Hero Banner --}}
+        <div class="bg-gradient-to-br from-gray-300 via-purple-200 to-gray-400 rounded-2xl mb-6 relative overflow-hidden" style="height: 280px;">
+            <div class="absolute top-12 right-32 bg-purple-300/40 rounded-full w-48 h-48"></div>
+            <div class="absolute bottom-0 left-16 bg-purple-200/30 rounded-full w-64 h-64"></div>
+            <div class="absolute top-20 right-1/3 bg-gray-400/20 rounded-full w-56 h-56"></div>
+            
+            <div class="absolute bottom-8 left-8 w-16 h-16 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-3xl font-bold">
+                2
+            </div>
+
+            <div class="absolute top-8 right-8 text-right">
+                <div class="text-2xl font-bold text-gray-900">Advanced SEO</div>
+                <div class="text-base text-gray-700">Cohort 2 — Fall 2024</div>
+            </div>
+        </div>
+
         {{-- Header --}}
         <header class="bg-white rounded-2xl p-6 mb-6 flex items-center justify-between flex-wrap gap-4">
             <div class="flex items-center gap-4">
-                <div class="w-16 h-16 bg-purple-500 text-white rounded-xl flex items-center justify-center text-3xl font-bold flex-shrink-0">
-                    2
-                </div>
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Cohort 2: Advanced SEO</h1>
-                </div>
+                <h1 class="text-3xl font-bold text-gray-900">Cohort 2: Advanced SEO</h1>
             </div>
             <div class="flex items-center gap-2">
                 <button class="px-4 py-2 border-2 border-gray-900 text-gray-900 rounded-full hover:bg-gray-50 font-medium flex items-center gap-2">
@@ -59,7 +70,6 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-6">
-                {{-- Discussion Card 1 --}}
                 <article class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition-shadow cursor-pointer">
                     <div class="flex items-center gap-2 mb-4">
                         <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-md text-xs font-medium">Questions</span>
@@ -91,7 +101,6 @@
                     </div>
                 </article>
 
-                {{-- Discussion Card 2 --}}
                 <article class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition-shadow cursor-pointer">
                     <div class="flex items-center gap-2 mb-4">
                         <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-md text-xs font-medium">Questions</span>
@@ -123,7 +132,6 @@
                     </div>
                 </article>
 
-                {{-- Discussion Card 3 --}}
                 <article class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition-shadow cursor-pointer">
                     <div class="flex items-center gap-2 mb-4">
                         <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-md text-xs font-medium">Questions</span>
@@ -158,36 +166,35 @@
         </section>
 
         {{-- Assignments Section --}}
-        <section class="mb-8" x-data="{ activeWeek: 'Week 1' }">
+        <section class="mb-8" x-data="{ activeWeek: 'Week 2' }">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Assignments</h2>
             <p class="text-gray-600 mb-6">Your next level-up awaits! Complete assignments given by the cohort teacher.</p>
 
             <div class="flex gap-2 mb-6">
-                <button @click="activeWeek = 'Week 1'" 
-                        :class="activeWeek === 'Week 1' ? 'border-indigo-600 text-indigo-600' : 'border-gray-300 text-gray-700 hover:bg-gray-50'"
-                        class="px-6 py-2.5 bg-white rounded-full font-medium text-sm transition-colors border-2">
-                    Week 1
-                </button>
                 <button @click="activeWeek = 'Week 2'" 
                         :class="activeWeek === 'Week 2' ? 'border-indigo-600 text-indigo-600' : 'border-gray-300 text-gray-700 hover:bg-gray-50'"
                         class="px-6 py-2.5 bg-white rounded-full font-medium text-sm transition-colors border-2">
                     Week 2
                 </button>
+                <button @click="activeWeek = 'Week 1'" 
+                        :class="activeWeek === 'Week 1' ? 'border-indigo-600 text-indigo-600' : 'border-gray-300 text-gray-700 hover:bg-gray-50'"
+                        class="px-6 py-2.5 bg-white rounded-full font-medium text-sm transition-colors border-2">
+                    Week 1
+                </button>
             </div>
 
             <div class="space-y-4">
-                {{-- Week 1 Assignments --}}
-                <div x-show="activeWeek === 'Week 1'" x-cloak class="space-y-4">
+                <div x-show="activeWeek === 'Week 2'" x-cloak>
                     <article class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow cursor-pointer">
                         <div class="flex gap-4">
                             <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <svg class="w-6 h-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                 </svg>
                             </div>
                             <div class="flex-1">
-                                <h3 class="font-bold text-gray-900 mb-2">SEO Audit and Optimization Plan (Week 1)</h3>
-                                <p class="text-sm text-gray-600">Conduct a comprehensive SEO audit of a website of your choice and develop a detailed optimization plan. Objective: Introduction to fundamental SEO concepts. Learn how to analyze on-page SEO and off-page...</p>
+                                <h3 class="font-bold text-gray-900 mb-2">Advanced Link Building Strategy (Week 2)</h3>
+                                <p class="text-sm text-gray-600">Develop and execute an advanced link building campaign. Objective: Master the art of acquiring high-quality backlinks through strategic outreach and content creation...</p>
                             </div>
                             <div class="flex items-center gap-4 text-sm text-gray-500 flex-shrink-0">
                                 <div class="flex items-center gap-1">
@@ -213,18 +220,17 @@
                     </article>
                 </div>
 
-                {{-- Week 2 Assignments --}}
-                <div x-show="activeWeek === 'Week 2'" x-cloak class="space-y-4">
+                <div x-show="activeWeek === 'Week 1'" x-cloak>
                     <article class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow cursor-pointer">
                         <div class="flex gap-4">
                             <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <svg class="w-6 h-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                 </svg>
                             </div>
                             <div class="flex-1">
-                                <h3 class="font-bold text-gray-900 mb-2">Advanced Link Building Strategy (Week 2)</h3>
-                                <p class="text-sm text-gray-600">Develop and execute a comprehensive link building campaign that includes outreach, content marketing, and partnership strategies. Master the techniques for acquiring high-quality backlinks...</p>
+                                <h3 class="font-bold text-gray-900 mb-2">SEO Audit and Optimization Plan (Week 1)</h3>
+                                <p class="text-sm text-gray-600">Conduct a comprehensive SEO audit of a website of your choice and develop a detailed optimization plan. Objective: Introduction to Week 1 of our task focused on creating a...</p>
                             </div>
                             <div class="flex items-center gap-4 text-sm text-gray-500 flex-shrink-0">
                                 <div class="flex items-center gap-1">
@@ -291,7 +297,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Apps</h3>
-                    <p class="text-gray-600 mb-4 text-sm">Access curated SEO tools collection</p>
+                    <p class="text-gray-600 mb-4 text-sm">Access our curated collection of top marketing tools</p>
                     <button class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium transition-colors text-sm">
                         See tools
                     </button>
@@ -304,7 +310,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Templates</h3>
-                    <p class="text-gray-600 mb-4 text-sm">SEO audit templates and checklists</p>
+                    <p class="text-gray-600 mb-4 text-sm">Download the M/A of marketing tools and analytics templates</p>
                     <button class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium transition-colors text-sm">
                         Download
                     </button>
@@ -317,7 +323,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Quizzes</h3>
-                    <p class="text-gray-600 mb-4 text-sm">Test your SEO knowledge</p>
+                    <p class="text-gray-600 mb-4 text-sm">Test your skills and understanding frequently to achieve your goals</p>
                     <button class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium transition-colors text-sm">
                         See quizzes
                     </button>
@@ -331,7 +337,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Newsletter</h3>
-                    <p class="text-gray-600 mb-4 text-sm">Weekly SEO insights and updates</p>
+                    <p class="text-gray-600 mb-4 text-sm">Subscribe to our newsletter for the latest marketing insights</p>
                     <button class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium transition-colors text-sm">
                         Subscribe
                     </button>

@@ -8,10 +8,17 @@ Route::view('/', 'pages.home')->name('home');
 // Students
 Route::view('/students', 'pages.students.index')->name('students.index');
 
-// Cohorts - список всех когорт
-Route::view('/cohorts', 'pages.cohorts.index')->name('cohorts.index');
+// Student Directory
+Route::get('/student-directory', function () {
+    return view('pages.student-directory');
+})->name('student-directory');
 
-// Конкретные когорты (убрали старый динамический роут)
+// Cohorts - список всех когорт
+Route::get('/cohorts', function () {
+    return view('pages.cohorts');
+})->name('cohorts.index');
+
+// Конкретные когорты
 Route::get('/cohorts/growth-marketing', function () {
     return view('pages.cohorts.growth-marketing');
 })->name('cohorts.growth-marketing');
@@ -28,22 +35,39 @@ Route::get('/cohorts/content-marketing', function () {
     return view('pages.cohorts.content-marketing');
 })->name('cohorts.content-marketing');
 
-// Community
-Route::view('/discussion', 'pages.community.discussion')->name('community.discussion');
-Route::view('/events', 'pages.community.events')->name('community.events');
-Route::view('/spotlight', 'pages.community.spotlight')->name('community.spotlight');
-Route::view('/connect', 'pages.community.connect')->name('community.connect');
-Route::view('/showcase', 'pages.community.showcase')->name('community.showcase');
-
 // Academy
-Route::view('/ask-your-teacher', 'pages.academy.ask-teacher')->name('academy.ask-teacher');
-Route::view('/careers', 'pages.academy.careers')->name('academy.careers');
-Route::view('/careers/{id}', 'pages.academy.career-detail')->name('academy.career.detail');
+Route::get('/ask-your-teacher', function () {
+    return view('pages.ask-your-teacher');
+})->name('ask-your-teacher');
 
-// Student Directory
-Route::view('/student-directory', 'pages.student-directory')->name('student-directory');
+// Community
+Route::get('/discussion', function () {
+    return view('pages.discussion');
+})->name('discussion');
 
 // Auth
+
+Route::get('/events', function () {
+    return view('pages.events');
+})->name('events');
+
+Route::get('/spotlight', function () {
+    return view('pages.spotlight');
+})->name('spotlight');
+
+Route::get('/connect', function () {
+    return view('pages.connect');
+})->name('connect');
+
+Route::get('/showcase', function () {
+    return view('pages.showcase');
+})->name('showcase');
+
 Route::get('/login', function () {
-    return redirect('https://edumark.bettermode.io/auth/login');
+    return view('auth.login');
 })->name('login');
+
+Route::post('/login', function () {
+    // Имитация логина - просто редирект на главную
+    return redirect()->route('home')->with('success', 'Welcome back!');
+})->name('login.post');

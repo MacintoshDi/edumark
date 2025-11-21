@@ -102,3 +102,13 @@
         @apply w-24 h-24 top-5 right-24;
     }
 }
+
+/* Скрываем scrollbar но оставляем возможность скролла */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+}
